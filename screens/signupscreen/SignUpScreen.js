@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { ImageBackground, View, Text, StyleSheet, TextInput } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { authentication } from '../../FireBaseConfig';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 import Button from '../../components/Button';
 import { Background } from '../../Background/Background';
 
-export default function SignInScreen({ navigation }) {
+export default function SignUpScreen({ navigation }) {
     const [ emailAddress, setEmailAddress ] = useState();
     const [ password, setPassword ] = useState();
+    const [ reenteredPassword, setReenteredPassword ] = useState();
 
     onEmailHandler = (value) => {
         setEmailAddress(value);
@@ -18,13 +19,31 @@ export default function SignInScreen({ navigation }) {
         setPassword(value);
     }
 
-    const SignInUser = () => {
-        signInWithEmailAndPassword(authentication, emailAddress, password)
-            .then((userCredential) => {
-                // signed in
-                const user = userCredential.user;
-                console.log(user);
+    onReenteredPasswordHandler = (value) => {
+        setReenteredPassword(value);
+    }
 
+    const RegisterUser = () => {
+        if (password !== reenteredPassword) {
+            Alert.alert('Passwords do not match');
+            return;
+        }
+
+        createUserWithEmailAndPassword(authentication, emailAddress, password)
+            .then((userCredential) => {
+                // user account created
+                const user = userCredential.user;
+
+                Alert.alert(
+                    'Message',
+                    'Account successfully created',
+                    [
+                        {
+                            text: 'Go back to main page',
+                            onPress: () => { { navigation.navigate('Home') } }
+                        }
+                    ]
+                );
             })
             .catch((e) => {
                 const errorCode = e.code;
@@ -37,7 +56,7 @@ export default function SignInScreen({ navigation }) {
         <ImageBackground style={ { flex: 1 } } source={ { uri: Background } }>
             <View style={ styles.container }>
                 <View style={ styles.textContainer }>
-                    <Text style={ styles.fontStyle }>Log in</Text>
+                    <Text style={ styles.fontStyle }>Create Account</Text>
                 </View>
                 <TextInput style={ styles.input }
                     placeholder='Email Address'
@@ -50,9 +69,15 @@ export default function SignInScreen({ navigation }) {
                     secureTextEntry={ true }
                     onChangeText={ onPasswordHandler }
                 />
+                <TextInput style={ styles.input }
+                    placeholder='Repeat Password'
+                    placeholderTextColor='white'
+                    secureTextEntry={ true }
+                    onChangeText={ onReenteredPasswordHandler }
+                />
                 <Button style={ styles.button }
-                    title='Sign In'
-                    onPress={ SignInUser }
+                    title='Sign Up'
+                    onPress={ RegisterUser }
                 />
                 <Button style={ styles.button }
                     title='Go Back'
@@ -61,6 +86,7 @@ export default function SignInScreen({ navigation }) {
             </View>
         </ImageBackground>
     )
+
 }
 
 const styles = StyleSheet.create({
@@ -77,9 +103,10 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 40
     },
-    fontStyle: {
-        color: 'white',
-        fontSize: 22,
+    fontContainer: {
+        marginTop: 50,
+        marginBottom: 30,
+        alignItems: 'center',
     },
     input: {
         backgroundColor: 'transparent',
@@ -104,5 +131,6 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         alignItems: 'center',
+
     }
 });
