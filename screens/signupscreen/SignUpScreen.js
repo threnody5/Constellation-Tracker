@@ -131,6 +131,9 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         alignItems: 'center',
-
+    },
+    fontStyle: {
+        color: 'white',
+        fontSize: 24,
     }
 });

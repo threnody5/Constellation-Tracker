@@ -37,7 +37,7 @@ export default function SignInScreen({ navigation }) {
         <ImageBackground style={ { flex: 1 } } source={ { uri: Background } }>
             <View style={ styles.container }>
                 <View style={ styles.textContainer }>
-                    <Text style={ styles.fontStyle }>Log in</Text>
+                    <Text style={ styles.fontStyle }>Log In</Text>
                 </View>
                 <TextInput style={ styles.input }
                     placeholder='Email Address'
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     },
     fontStyle: {
         color: 'white',
-        fontSize: 22,
+        fontSize: 24,
     },
     input: {
         backgroundColor: 'transparent',
