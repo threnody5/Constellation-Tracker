@@ -1,0 +1,86 @@
+[
+    {
+        "id" : 1,
+        "name": "Andromeda",
+        "url": "https://naturenoon.com/wp-content/uploads/2021/07/andromeda_star_constellation-1-1024x820-1.png",
+        "information": "Andromeda is the daughter of Cassiopeia and Cepheus in Greek mythology. Unfortunately, appeasing the gods, she was chained and fed to the sea monster Cetus. However, Perseus finally rescued her."
+    },
+    {
+        "id" : 2,
+        "name" : "Apus",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/apus_star_constellation-1-1024x820-1.png",
+        "information" : "Greek for “no feet,” Apus is the official bird of paradise. Ironically, this name mocks western civilization's misconception of the paradise bird not having feet."
+    },
+    {
+        "id" : 3,
+        "name" : "Aries",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/aries_star_constellation-1024x820-1.png",
+        "information" : "Aries was a legendary ram, yielding wings and golden fleece. Nephele originally sent him to rescue her son, Phrixus, upon his father sacrificing him to ward off famine. Ultimately, both Phrixus and his sister, Helle, boarded Aries, flying to safety on the Black Sea."
+    },
+    {
+        "id" : 4,
+        "name" : "Cancer",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/cancer_star_constellation-1024x820-1.png",
+        "information" : "Cancer was a crab sent to distract Heracles while battling an ancient hydra or snake. In fact, such a battle was one of Heracles' 12 labors. Ultimately, he kicked cancer so hard, it flew into our skies, forming the infamous constellation we know today."
+    },
+    {
+        "id" : 5,
+        "name" : "Canis Major",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/canis_major_star_constellation-1-1024x820-1.png",
+        "information" : "Canis Major is the big dog, following legendary hunter Orion. In fact, Orion hunts the rabbit, Lepus."
+    },
+    {
+        "id" : 6,
+        "name" : "Cassiopeia",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/cassiopeia_star_constellation-1-1024x820-1.png",
+        "information" : "Queen Cassiopeia, a boastful royal, was the wife of Cepheus and mother of Andromeda. Ultimately, while claiming to be more beautiful than anyone else, Poseidon sends a sea monster to kill  Cassiopeia. Upon requesting help, Cepheus is told he must sacrifice his daughter to the monster. Finally, after leaving the daughter chained to a rock, Perseus saves her."
+    },
+    {
+        "id" : 7,
+        "name" : "Corona Borealis",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/corona_borealis_star_constellation-1-1024x820-1.png",
+        "information" : "Corona Borealis, the northern crown, represents the crown worn by the Cretan princess Ariadne during her wedding. Upon helping Theseus defeat the minotaur, Ariadne sailed to Naxos with the hero, where he eventually left her broken-hearted. However, Dionysus fell in love. Ultimately, this paved the way for her happy marriage and the northern crown."
+    },
+    {
+        "id" : 8,
+        "name" : "Corvus",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/corvus_star_constellation-1-1024x820-1.png",
+        "information" : "Representing a crow, or raven, Corvus was the sacred bird of god Apollo. In fact, Apollo tells the raven to watch over his pregnant lover, Coronis. Ultimately, Coronis falls for another human man, leaving Apollo. Finally, the god becomes too angry by the raven's mismanagement. He scorches his wings, leaving them blackened."
+    },
+    {
+        "id" : 9,
+        "name" : "Hercules",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/hercules_star_constellation-1-1024x820-1.png",
+        "information" : "Named after Heracles, legendary strong man and hero of Greek mythology."
+    },
+    {
+        "id" : 10,
+        "name" : "Hydra",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/hydra_star_constellation-1-1024x820-1.png",
+        "information" : "Officially, Hydra is the largest of the 88 recognized constellations. Lernaean Hydra was the mythological monster from Heracles' 12 labors. Plus, Hydra is one of the ancient, original constellations, coined by Ptolemy in the 2nd century."
+    },
+    {
+        "id" : 11,
+        "name" : "Pegasus",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/pegasus_star_constellation-1-1024x820-1.png",
+        "information" : "Pegasus was a white, majestic, winged horse of Greek mythology. In fact, the horse was said to have sprung from Medusa's head when Perseus beheaded her."
+    },
+    {
+        "id" : 12,
+        "name" : "Phoenix",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/phoenix_star_constellation-1-1024x820-1.png",
+        "information" : "Sacred to countless cultures and mythologies, Phoenix represents the firebird."
+    },
+    {
+        "id" : 13,
+        "name" : "Taurus",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/taurus_star_constellation-1024x820-2.png",
+        "information" : "Taurus, the bull, is another ancient constellation dating back to Ptolemy in the 2nd century. In Greek mythology, Zeus morphs into a bull to seduce and kidnap Europa, the beautiful daughter of Phoenician King Agenor."
+    },
+    {
+        "id" : 14,
+        "name" : "Ursa Major",
+        "url" : "https://naturenoon.com/wp-content/uploads/2021/07/ursa_major_star_constellation-1-1024x820-1.png",
+        "information" : "One of the oldest constellations, Ursa Major, the big bear, is widely known across many cultures and mythologies. In Greek mythology, Zeus falls in love with the nymph, Callisto. However, Zeus' wife Hera turns the nymph into a bear."
+    }
+]
