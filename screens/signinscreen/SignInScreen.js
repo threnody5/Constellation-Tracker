@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import Button from '../../components/Button';
 import { Background } from '../../Background/Background';
-import { LoggedIn } from '../LoggedIn/LoggedIn';
+import { LoggedIn } from '../loggedin/LoggedIn';
 
 export default function SignInScreen({ navigation }) {
     const [ emailAddress, setEmailAddress ] = useState();
