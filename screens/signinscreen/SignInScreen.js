@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { ImageBackground, View, Text, StyleSheet, TextInput } from 'react-native';
+import React, { useState, onEffect } from 'react';
+import { ImageBackground, View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { authentication } from '../../FireBaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import Button from '../../components/Button';
 import { Background } from '../../Background/Background';
+import { LoggedIn } from '../LoggedIn/LoggedIn';
 
 export default function SignInScreen({ navigation }) {
     const [ emailAddress, setEmailAddress ] = useState();
@@ -24,12 +25,22 @@ export default function SignInScreen({ navigation }) {
                 // signed in
                 const user = userCredential.user;
                 console.log(user);
+                Alert.alert('Message',
+                    'Successfully signed in',
+                    [
+                        {
+                            text: 'Continue',
+                            onPress: () => { { navigation.navigate('LoggedIn') } }
+                        }
+                    ]
+                )
 
             })
             .catch((e) => {
                 const errorCode = e.code;
                 const errorMessage = e.message;
                 console.log(errorCode, errorMessage);
+                Alert.alert('Error', 'Invalid email or password');
             })
     }
 
