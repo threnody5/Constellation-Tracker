@@ -7,7 +7,7 @@ import Header from '../../header/Header';
 import Button from '../../components/Button';
 import SignInScreen from '../signinscreen/SignInScreen';
 import SignUpScreen from '../signupscreen/SignUpScreen';
-import LoggedIn, { loggedIn } from '../LoggedIn/LoggedIn';
+import LoggedIn from '../loggedin/LoggedIn';
 import { Background } from '../../Background/Background';
 
 export default function HomeScreen() {
