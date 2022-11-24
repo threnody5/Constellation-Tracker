@@ -28,6 +28,10 @@ export default function SignUpScreen({ navigation }) {
             Alert.alert('Passwords do not match');
             return;
         }
+        if (password.length < 6) {
+            Alert.alert('Password must be at least 6 characters')
+            return;
+        }
 
         createUserWithEmailAndPassword(authentication, emailAddress, password)
             .then((userCredential) => {
