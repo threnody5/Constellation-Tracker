@@ -57,7 +57,7 @@ export default function SignUpScreen({ navigation }) {
     }
 
     return (
-        <ImageBackground style={ { flex: 1 } } source={ { uri: Background } }>
+        <ImageBackground style={ { flex: 1 } } blurRadius={ 1 } source={ { uri: Background } }>
             <View style={ styles.container }>
                 <View style={ styles.textContainer }>
                     <Text style={ styles.fontStyle }>Create Account</Text>
@@ -98,15 +98,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
     },
-    button: {
-        backgroundColor: '#33bbff',
-        paddingTop: 10,
-        paddingBottom: 10,
-        marginLeft: 30,
-        marginRight: 30,
-        borderRadius: 5,
-        marginBottom: 40
-    },
     fontContainer: {
         marginTop: 50,
         marginBottom: 30,
@@ -115,18 +106,12 @@ const styles = StyleSheet.create({
     input: {
         backgroundColor: 'transparent',
         borderRadius: 5,
-        borderLeftColor: 'white',
-        borderLeftWidth: 2,
-        borderTopColor: 'white',
-        borderTopWidth: 2,
-        borderRightColor: 'white',
-        borderRightWidth: 2,
         borderBottomColor: 'white',
-        borderBottomWidth: 2,
+        borderBottomWidth: 1,
         marginLeft: 20,
         marginRight: 20,
         color: 'white',
-        fontSize: 24,
+        fontSize: 18,
         paddingTop: 10,
         paddingBottom: 10,
         paddingLeft: 10,
