@@ -1,15 +1,14 @@
-import React, { useState, onEffect } from 'react';
+import React, { useState } from 'react';
 import { ImageBackground, View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { authentication } from '../../FireBaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import Button from '../../components/Button';
 import { Background } from '../../Background/Background';
-import { LoggedIn } from '../loggedin/LoggedIn';
 
 export default function SignInScreen({ navigation }) {
-    const [ emailAddress, setEmailAddress ] = useState();
-    const [ password, setPassword ] = useState();
+    const [ emailAddress, setEmailAddress ] = useState('temp@temp.com');
+    const [ password, setPassword ] = useState('temppassword');
 
     onEmailHandler = (value) => {
         setEmailAddress(value);
@@ -45,7 +44,7 @@ export default function SignInScreen({ navigation }) {
     }
 
     return (
-        <ImageBackground style={ { flex: 1 } } source={ { uri: Background } }>
+        <ImageBackground style={ { flex: 1 } } blurRadius={ 1 } source={ { uri: Background } }>
             <View style={ styles.container }>
                 <View style={ styles.textContainer }>
                     <Text style={ styles.fontStyle }>Log In</Text>
@@ -79,15 +78,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
     },
-    button: {
-        backgroundColor: '#33bbff',
-        paddingTop: 10,
-        paddingBottom: 10,
-        marginLeft: 30,
-        marginRight: 30,
-        borderRadius: 5,
-        marginBottom: 40
-    },
     fontStyle: {
         color: 'white',
         fontSize: 24,
@@ -95,18 +85,12 @@ const styles = StyleSheet.create({
     input: {
         backgroundColor: 'transparent',
         borderRadius: 5,
-        borderLeftColor: 'white',
-        borderLeftWidth: 2,
-        borderTopColor: 'white',
-        borderTopWidth: 2,
-        borderRightColor: 'white',
-        borderRightWidth: 2,
         borderBottomColor: 'white',
-        borderBottomWidth: 2,
+        borderBottomWidth: 1,
         marginLeft: 20,
         marginRight: 20,
         color: 'white',
-        fontSize: 24,
+        fontSize: 18,
         paddingTop: 10,
         paddingBottom: 10,
         paddingLeft: 10,
