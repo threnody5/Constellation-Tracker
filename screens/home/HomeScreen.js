@@ -1,3 +1,5 @@
+/** @format */
+
 import React from 'react';
 import { ImageBackground, View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -20,51 +22,61 @@ export default function HomeScreen() {
       <Stack.Navigator>
         <Stack.Screen
           name='Home'
-          component={ HomeScreenStack }
-          options={ { headerShown: false } }
+          component={HomeScreenStack}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name='SignIn'
-          component={ SignInScreen }
-          options={ { headerShown: false } }
+          component={SignInScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name='SignUp'
-          component={ SignUpScreen }
-          options={ { headerShown: false } }
+          component={SignUpScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-        name='LoggedIn'
-        component={ LoggedIn }
-        options={ { headerShown: false } }
+          name='LoggedIn'
+          component={LoggedIn}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
-  )
+  );
 }
 
 const HomeScreenStack = ({ navigation }) => {
   return (
-    <ImageBackground style={ { flex: 1 } } blurRadius={ 1 } source={ { uri: Background } }>
-      <View style={ styles.container }>
+    <ImageBackground
+      style={{ flex: 1 }}
+      blurRadius={1}
+      source={{ uri: Background }}
+    >
+      <View style={styles.container}>
         <Header />
-        <View style={ styles.container }>
-          <Button style={ styles.button }
+        <View style={styles.container}>
+          <Button
+            style={styles.button}
             title='Log-In'
-            onPress={ () => { navigation.navigate('SignIn') } }
+            onPress={() => {
+              navigation.navigate('SignIn');
+            }}
           />
-          <View style={ styles.fontContainer }>
-            <Text style={ styles.fontStyle }>Don't have an Account?</Text>
+          <View style={styles.fontContainer}>
+            <Text style={styles.fontStyle}>Don't have an Account?</Text>
           </View>
-          <Button style={ styles.button }
+          <Button
+            style={styles.button}
             title='Sign-up'
-            onPress={ () => { navigation.navigate('SignUp') } }
+            onPress={() => {
+              navigation.navigate('SignUp');
+            }}
           />
         </View>
       </View>
     </ImageBackground>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -78,7 +90,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     borderRadius: 5,
-    marginBottom: 40
+    marginBottom: 40,
   },
   fontContainer: {
     marginTop: 50,
@@ -89,5 +101,5 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 22,
     // rgb(191, 0, 255)
-  }
+  },
 });

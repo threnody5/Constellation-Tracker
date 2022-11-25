@@ -1,3 +1,5 @@
+/** @format */
+
 import React from 'react';
 import { ImageBackground } from 'react-native';
 
@@ -6,10 +8,13 @@ import { Background } from '../../Background/Background';
 import GalleryList from '../gallerylist/GalleryList';
 
 export default function LoggedIn() {
-
-    return (
-        <ImageBackground style={ { flex: 1 } } blurRadius={ 1 } source={ { uri: Background } }>
-            <GalleryList />
-        </ImageBackground>
-    )
+  return (
+    <ImageBackground
+      style={{ flex: 1 }}
+      blurRadius={1}
+      source={{ uri: Background }}
+    >
+      <GalleryList />
+    </ImageBackground>
+  );
 }
