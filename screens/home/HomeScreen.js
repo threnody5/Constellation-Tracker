@@ -45,7 +45,7 @@ export default function HomeScreen() {
 
 const HomeScreenStack = ({ navigation }) => {
   return (
-    <ImageBackground style={ { flex: 1 } } source={ { uri: Background } }>
+    <ImageBackground style={ { flex: 1 } } blurRadius={ 1 } source={ { uri: Background } }>
       <View style={ styles.container }>
         <Header />
         <View style={ styles.container }>
@@ -88,5 +88,6 @@ const styles = StyleSheet.create({
   fontStyle: {
     color: 'white',
     fontSize: 22,
+    // rgb(191, 0, 255)
   }
 });
