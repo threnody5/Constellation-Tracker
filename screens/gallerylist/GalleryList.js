@@ -9,6 +9,7 @@ import {
   Pressable,
   Modal,
   ImageBackground,
+  Image,
 } from 'react-native';
 
 import Button from '../../components/Button';
@@ -21,28 +22,74 @@ const constellationData = require('../../constellation.json');
 
 export default function GalleryList() {
   const [modalDisplay, setModalDisplay] = useState(false);
-  const [selectedConstellationData, setSelectedConstellationData] = useState();
+  const [selectedConstellationDataID, setSelectedConstellationDataID] = useState();
+  const [selectedConstellationDataName, setSelectedConstellationDataName] = useState();
+  const [selectedConstellationDataInfo, setSelectedConstellationDataInfo] = useState();
+  const [selectedConstellationDataUrl, setSelectedConstellationDataUrl] = useState();
+  const [haveSeen, setHaveSeen] = useState();
 
   //? event handler may not be required for this, useState may be enough
-  onSelectedConstellationDataHandler = (value) => {
-    setSelectedConstellationData(value);
-    console.log(value);
+  onSelectedConstellationDataIDHandler = (value) => {
+    setSelectedConstellationDataID(value);
+  };
+
+  onSelectedConstellationDataNameHandler = (value) => {
+    setSelectedConstellationDataName(value);
+  };
+
+  onSelectedConstellationDataInfoHandler = (value) => {
+    setSelectedConstellationDataInfo(value);
+  };
+
+  onSelectedConstellationDataUrlHandler = (value) => {
+    setSelectedConstellationDataUrl(value);
   };
 
   return (
     <View>
-      {/* <Modal visible={ modalDisplay } animationType='fade'>
-            <ImageBackground style={ { flex: 1 } } blurRadius={ 1 } source={ { uri: Background } }>
-                <View>
-                    <MaterialIcons
-                    name='close'
-                    size={ 35 }
-                    onPress={ () => { setModalDisplay(false) } }
-                    style={ styles.modalToggle } />
-                    <Text>{ item.name }</Text>
-                </View>
-                </ImageBackground>
-            </Modal> */}
+      <Modal
+        visible={modalDisplay}
+        animationType='fade'
+      >
+        <ImageBackground
+          style={{ flex: 1 }}
+          blurRadius={1}
+          source={{ uri: Background }}
+        >
+          <View>
+            <MaterialIcons
+              name='close'
+              size={35}
+              onPress={() => {
+                setModalDisplay(false);
+              }}
+              style={styles.modalToggle}
+            />
+            <View style={styles.modalContainer}>
+              <Text style={styles.modalTitle}>{selectedConstellationDataName}</Text>
+              <Image
+                style={styles.image}
+                source={{ uri: selectedConstellationDataUrl }}
+              />
+              <Text style={styles.modalText}>{selectedConstellationDataInfo}</Text>
+            </View>
+            <View>
+              <CheckBox
+                value={haveSeen}
+                onValueChange={setHaveSeen}
+              />
+              <Text>Have Viewed</Text>
+            </View>
+            <Button
+              // style={styles.button}
+              title='Update'
+              onPress={() => {
+                console.log('DING');
+              }}
+            />
+          </View>
+        </ImageBackground>
+      </Modal>
       <SafeAreaView>
         <ScrollView>
           <View style={styles.container}>
@@ -55,46 +102,19 @@ export default function GalleryList() {
               >
                 <Pressable
                   style={styles.pressableContainer}
-                  key={constellationData[key].id}
+                  key={item.id}
                   onPress={() => {
                     setModalDisplay(true);
-                    onSelectedConstellationDataHandler(constellationData[key]);
-                    // console.log(constellationData[key]);
+                    onSelectedConstellationDataIDHandler(item.id);
+                    onSelectedConstellationDataNameHandler(item.name);
+                    onSelectedConstellationDataInfoHandler(item.information);
+                    onSelectedConstellationDataUrlHandler(item.url);
                   }}
                 >
                   <Text style={styles.textFormat}>{item.name}</Text>
                 </Pressable>
               </LinearGradient>
             ))}
-            <Modal
-              visible={modalDisplay}
-              animationType='fade'
-            >
-              <ImageBackground
-                style={{ flex: 1 }}
-                blurRadius={1}
-                source={{ uri: Background }}
-              >
-                <View>
-                  <MaterialIcons
-                    name='close'
-                    size={35}
-                    onPress={() => {
-                      setModalDisplay(false);
-                    }}
-                    style={styles.modalToggle}
-                  />
-                  //! second map not required since only returning 1 object //TODO look up object
-                  //TODO deconstruction for values
-                  {/* <Text>{ selectedConstellationData.id }</Text> */}
-                  {
-                    // selectedConstellationData.map((item, key) => {
-                    // <Text>{ item[key].id }</Text>
-                    // })
-                  }
-                </View>
-              </ImageBackground>
-            </Modal>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -134,5 +154,25 @@ const styles = StyleSheet.create({
     marginLeft: 345,
     marginRight: 30,
     //rgb(191, 0, 255)
+  },
+  image: {
+    width: 370,
+    height: 370,
+    resizeMode: 'contain',
+  },
+  modalText: {
+    color: 'white',
+    fontSize: 22,
+    marginBottom: 20,
+  },
+  modalContainer: {
+    alignItems: 'center',
+    marginLeft: 20,
+    marginRight: 20,
+    // flex: 1
+  },
+  modalTitle: {
+    color: 'white',
+    fontSize: 36,
   },
 });
