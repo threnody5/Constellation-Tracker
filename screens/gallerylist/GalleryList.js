@@ -17,16 +17,23 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Background } from '../../Background/Background';
+import SetLocation from '../../components/location/SetLocation';
+import UpdateDatabase from '../../components/updatedatabase/UpdateDatabase';
+
+import Checkbox from 'expo-checkbox';
 
 const constellationData = require('../../constellation.json');
 
 export default function GalleryList() {
   const [modalDisplay, setModalDisplay] = useState(false);
-  const [selectedConstellationDataID, setSelectedConstellationDataID] = useState();
-  const [selectedConstellationDataName, setSelectedConstellationDataName] = useState();
-  const [selectedConstellationDataInfo, setSelectedConstellationDataInfo] = useState();
-  const [selectedConstellationDataUrl, setSelectedConstellationDataUrl] = useState();
-  const [haveSeen, setHaveSeen] = useState();
+  const [selectedConstellationDataID, setSelectedConstellationDataID] = useState(null);
+  const [selectedConstellationDataName, setSelectedConstellationDataName] = useState(null);
+  const [selectedConstellationDataInfo, setSelectedConstellationDataInfo] = useState(null);
+  const [selectedConstellationDataUrl, setSelectedConstellationDataUrl] = useState(null);
+  const [haveSeen, setHaveSeen] = useState(false);
+  // console.log(haveSeen);
+
+  const test = 'this is working';
 
   //? event handler may not be required for this, useState may be enough
   onSelectedConstellationDataIDHandler = (value) => {
@@ -56,38 +63,39 @@ export default function GalleryList() {
           blurRadius={1}
           source={{ uri: Background }}
         >
-          <View>
-            <MaterialIcons
-              name='close'
-              size={35}
-              onPress={() => {
-                setModalDisplay(false);
-              }}
-              style={styles.modalToggle}
-            />
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalTitle}>{selectedConstellationDataName}</Text>
-              <Image
-                style={styles.image}
-                source={{ uri: selectedConstellationDataUrl }}
-              />
-              <Text style={styles.modalText}>{selectedConstellationDataInfo}</Text>
-            </View>
+          <ScrollView>
             <View>
-              <CheckBox
-                value={haveSeen}
-                onValueChange={setHaveSeen}
+              <MaterialIcons
+                name='close'
+                size={35}
+                onPress={() => {
+                  setModalDisplay(false);
+                }}
+                style={styles.modalToggle}
               />
-              <Text>Have Viewed</Text>
+              <View style={styles.modalContainer}>
+                <Text style={styles.modalTitle}>{selectedConstellationDataName}</Text>
+                <Image
+                  style={styles.image}
+                  source={{ uri: selectedConstellationDataUrl }}
+                />
+                <Text style={styles.modalText}>{selectedConstellationDataInfo}</Text>
+              </View>
+              <View style={styles.checkBoxContainer}>
+                <Checkbox
+                  value={haveSeen}
+                  onValueChange={setHaveSeen}
+                  color={haveSeen ? 'rgb(191, 0, 255)' : undefined}
+                />
+                <Text style={styles.checkBoxText}>I have Seen this in the sky!</Text>
+              </View>
+              <SetLocation />
+              <Button
+                title='Update'
+                onPress={UpdateDatabase}
+              />
             </View>
-            <Button
-              // style={styles.button}
-              title='Update'
-              onPress={() => {
-                console.log('DING');
-              }}
-            />
-          </View>
+          </ScrollView>
         </ImageBackground>
       </Modal>
       <SafeAreaView>
@@ -102,7 +110,7 @@ export default function GalleryList() {
               >
                 <Pressable
                   style={styles.pressableContainer}
-                  key={item.id}
+                  key={key}
                   onPress={() => {
                     setModalDisplay(true);
                     onSelectedConstellationDataIDHandler(item.id);
@@ -153,7 +161,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     marginLeft: 345,
     marginRight: 30,
-    //rgb(191, 0, 255)
   },
   image: {
     width: 370,
@@ -169,10 +176,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 20,
     marginRight: 20,
-    // flex: 1
   },
   modalTitle: {
     color: 'white',
     fontSize: 36,
+  },
+  checkBoxText: {
+    color: 'white',
+    fontSize: 18,
+    marginLeft: 20,
+  },
+  checkBoxContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginLeft: 20,
+    marginBottom: 20,
   },
 });
