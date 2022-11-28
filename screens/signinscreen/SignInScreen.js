@@ -25,13 +25,13 @@ export default function SignInScreen({ navigation }) {
       .then((userCredential) => {
         // signed in
         const user = userCredential.user;
-        console.log(user);
+        // console.log(user);
         Alert.alert('Message', 'Successfully signed in', [
           {
             text: 'Continue',
             onPress: () => {
               {
-                navigation.navigate('LoggedIn');
+                navigation.navigate( 'LoggedIn', { loggedInUser: user.uid });
               }
             },
           },
