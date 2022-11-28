@@ -4,9 +4,13 @@ import React, { useState } from 'react';
 import { ImageBackground, View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { authentication } from '../../FireBaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { database } from '../../FireBaseConfig';
+import { ref, set } from 'firebase/database';
 
 import Button from '../../components/Button';
 import { Background } from '../../Background/Background';
+
+import constellationData from '../../constellation.json';
 
 export default function SignUpScreen({ navigation }) {
   const [emailAddress, setEmailAddress] = useState();
@@ -38,14 +42,20 @@ export default function SignUpScreen({ navigation }) {
     createUserWithEmailAndPassword(authentication, emailAddress, password)
       .then((userCredential) => {
         // user account created
-        const user = userCredential.user;
+        const userID = userCredential.user.uid;
+
+        function writeUserData() {
+          set(ref(database, 'users/' + userID), {
+            constellationData,
+          });
+        }
 
         Alert.alert('Message', 'Account successfully created', [
           {
             text: 'Go back to main page',
             onPress: () => {
               {
-                navigation.navigate('Home');
+                navigation.navigate('Home'), writeUserData();
               }
             },
           },
