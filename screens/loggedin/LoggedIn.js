@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import {
   View,
   Text,
@@ -25,31 +25,22 @@ import Checkbox from 'expo-checkbox';
 
 export default function LoggedIn({ route }) {
   const constellationData = require('../../constellation.json');
-  // console.log(constellationData);
 
   const databaseReference = ref(getDatabase());
 
   let userData = null;
   let constellationDatabaseInfo = null;
+  let constellationDatabaseUpdatedInfo = null;
   let loadedData = null;
 
   const [modalDisplay, setModalDisplay] = useState(false);
-  const [selectedConstellationDataID, setSelectedConstellationDataID] = useState(null);
+  // const [selectedConstellationDataID, setSelectedConstellationDataID] = useState(null);
   const [selectedConstellationDataName, setSelectedConstellationDataName] = useState(null);
   const [selectedConstellationDataInfo, setSelectedConstellationDataInfo] = useState(null);
   const [selectedConstellationDataUrl, setSelectedConstellationDataUrl] = useState(null);
-  // const [databaseSnapshot, setDatabaseSnapshot] = useState(null);
-  const [returnedUserData, setReturnedUserData] = useState(null);
   const [databaseList, setDatabaseList] = useState(null);
-  // const [updatedDatabaseList, setUpdatedDatabaseList] = useState(null);
 
   const [haveSeen, setHaveSeen] = useState(false);
-
-  // console.log(databaseSnapshot);
-
-  // onDataChangeHandler = (value) => {
-  //   setDatabaseSnapshot(value);
-  // };
 
   onSelectedConstellationDataIDHandler = (value) => {
     setSelectedConstellationDataID(value);
@@ -72,69 +63,59 @@ export default function LoggedIn({ route }) {
   const retrieveData = () => {
     constellationDatabaseInfo = ref(database, 'users/' + loggedInUser);
     onValue(constellationDatabaseInfo, (snapshot) => {
-      setReturnedUserData(snapshot.val());
-      // console.log(userData);
-      // console.log('this is userData ' + userData)
-
-      // console.log('inside userData ', userData);
+      // setReturnedUserData(snapshot.val());
+      constellationDatabaseUpdatedInfo = snapshot.val();
+      // console.log(constellationDatabaseUpdatedInfo);
     });
-    // console.log(userData);
   };
 
   useEffect(() => {
     setTimeout(() => {
       retrieveData();
-    }, 1000);
-    // setTimeout(() => {
-    //   if (returnedUserData !== null) {
-    //     // setUpdatedDatabaseList(returnedUserData.constellationData);
-    //   }
-    // }, 1000);
+    }, 500);
     setTimeout(() => {
       setDatabaseList(true);
     }, 1000);
-    
   }, []);
 
-  // console.log(updatedDatabaseList);
-
-  
-  // console.log(returnedUserData);
-
-  // setTimeout(() => {
-  //   if (userData !== null) {
-  //     loadedData = userData;
-
-  //     // setDatabaseList(loadedData);
-  //     // console.log(databaseList);
-  //     // console.log('this is constellationDatabaseInfo ' + constellationDatabaseInfo);
-  //   } else {
-  //     return;
-  //   }
-  // }, 2000);
-
-  // get(child(databaseReference, 'users/' + loggedInUser))
-  //   .then((snapshot) => {
-  //     if (snapshot.exists()) {
-  //       // console.log(snapshot.val());
-  //       userData = snapshot.val();
-  //       // setDatabaseSnapshot(snapshot.val());
-  //     } else {
-  //       console.log('No data available');
-  //     }
-  //   })
-  //   .catch((e) => {
-  //     console.error(e);
-  //   });
-
-  // console.log(databaseSnapshot);
+  useLayoutEffect(() => {
+      setTimeout(() => {
+      {
+        databaseList &&
+        constellationDatabaseUpdatedInfo.map((item, key) => (
+            <LinearGradient
+              colors={['rgba(191, 0, 255, .2)', 'rgba(115, 0, 153, .2)', 'rgba(0, 64, 128, .2)']}
+              style={styles.gradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+            >
+              <Pressable
+                style={styles.pressableContainer}
+                key={key}
+                onPress={() => {
+                  setModalDisplay(true);
+                  // onSelectedConstellationDataIDHandler(item.id);
+                  onSelectedConstellationDataNameHandler(item.name);
+                  onSelectedConstellationDataInfoHandler(item.information);
+                  onSelectedConstellationDataUrlHandler(item.url);
+                }}
+              >
+                <Text style={styles.textFormat}>{item.name}</Text>
+              </Pressable>
+            </LinearGradient>
+          ));
+      }
+      console.log('useLayoutEffect fires!')
+      console.log('----- NEW LINE -----');
+      console.log(constellationDatabaseUpdatedInfo);
+    }, 2000);
+    }, []);
 
   function writeUserData() {
     set(ref(database, 'users/' + loggedInUser), {
       constellationData,
     });
   }
-
 
   return (
     <ImageBackground
@@ -191,7 +172,7 @@ export default function LoggedIn({ route }) {
           <ScrollView>
             <View style={styles.container}>
               {!databaseList && <Text style={styles.textFormat}>LOADING</Text>}
-              {databaseList &&
+              {/* {databaseList &&
                 constellationData.map((item, key) => (
                   <LinearGradient
                     colors={[
@@ -208,7 +189,7 @@ export default function LoggedIn({ route }) {
                       key={key}
                       onPress={() => {
                         setModalDisplay(true);
-                        onSelectedConstellationDataIDHandler(item.id);
+                        // onSelectedConstellationDataIDHandler(item.id);
                         onSelectedConstellationDataNameHandler(item.name);
                         onSelectedConstellationDataInfoHandler(item.information);
                         onSelectedConstellationDataUrlHandler(item.url);
@@ -217,7 +198,7 @@ export default function LoggedIn({ route }) {
                       <Text style={styles.textFormat}>{item.name}</Text>
                     </Pressable>
                   </LinearGradient>
-                ))}
+                ))} */}
             </View>
           </ScrollView>
         </SafeAreaView>
