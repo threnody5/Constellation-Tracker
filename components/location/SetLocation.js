@@ -5,31 +5,32 @@ import { View, Text, StyleSheet } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import * as Location from 'expo-location';
 
-export default function SetLocation(props) {
-  const [location, setLocation] = useState(null);
-    const [errorMessage, setErrorMessage] = useState(null);
+export default function SetLocation() {
+  const [location, setLocation] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-    getCurrentLocation = () => {
-      async () => {
-              let status = await Location.requestForegroundPermissionsAsync();
-              if (status !== 'granted') {
-                  setErrorMessage('Permission for location was denied');
-                  return;
-              }
-  
-              let location = await Location.getCurrentPositionAsync({});
-              setLocation(location);
-            };
-            
-            let text = 'Waiting...';
-            if (errorMessage) {
-              text = errorMessage;
-            } else if (location) {
-              text = JSON.stringify(location);
-              console.log(text);
+  useEffect(() => {
+    async () => {
+      console.log('this fires');
+
+      let status = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMessage('Permission for location was denied');
+        return;
       }
-    }
 
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+
+      let text = 'Waiting...';
+      if (errorMessage) {
+        text = errorMessage;
+      } else if (location) {
+        text = JSON.stringify(location);
+        console.log(text);
+      }
+    };
+  });
 
   return (
     <View style={styles.checkBoxContainer}>

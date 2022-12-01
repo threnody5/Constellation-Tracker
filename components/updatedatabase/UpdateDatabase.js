@@ -1,11 +1,8 @@
-import { database } from "../../FireBaseConfig";
-import { ref, set } from  'firebase/database';
-import SetLocation from "../location/SetLocation";
+/** @format */
 
-export default function UpdateDatabase(props) {
-    SetLocation();
-    const { haveSeen, test } = props;
+import { database } from '../../FireBaseConfig';
+import { ref, set } from 'firebase/database';
 
-    console.log(test);
+// export default function UpdateDatabase() {
 
-}
+// }
