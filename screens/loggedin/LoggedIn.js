@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -19,27 +19,20 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Background } from '../../Background/Background';
 import SetLocation from '../../components/location/SetLocation';
 import { database } from '../../FireBaseConfig';
-import { getDatabase, ref, set, get, child, onValue } from 'firebase/database';
+import { ref, set, onValue } from 'firebase/database';
 
 import Checkbox from 'expo-checkbox';
 
 export default function LoggedIn({ route }) {
-  const constellationData = require('../../constellation.json');
-
-  const databaseReference = ref(getDatabase());
-
-  let userData = null;
   let constellationDatabaseInfo = null;
-  let constellationDatabaseUpdatedInfo = null;
-  let loadedData = null;
+  let constellationDatabaseUpdatedInfo = [];
 
   const [modalDisplay, setModalDisplay] = useState(false);
-  // const [selectedConstellationDataID, setSelectedConstellationDataID] = useState(null);
   const [selectedConstellationDataName, setSelectedConstellationDataName] = useState(null);
   const [selectedConstellationDataInfo, setSelectedConstellationDataInfo] = useState(null);
   const [selectedConstellationDataUrl, setSelectedConstellationDataUrl] = useState(null);
   const [databaseList, setDatabaseList] = useState(null);
-
+  const [serverData, setServerData] = useState([]);
   const [haveSeen, setHaveSeen] = useState(false);
 
   onSelectedConstellationDataIDHandler = (value) => {
@@ -60,60 +53,23 @@ export default function LoggedIn({ route }) {
 
   const { loggedInUser } = route.params;
 
-  const retrieveData = () => {
+  retrieveData = () => {
     constellationDatabaseInfo = ref(database, 'users/' + loggedInUser);
     onValue(constellationDatabaseInfo, (snapshot) => {
-      // setReturnedUserData(snapshot.val());
       constellationDatabaseUpdatedInfo = snapshot.val();
-      // console.log(constellationDatabaseUpdatedInfo);
+      setServerData(constellationDatabaseUpdatedInfo.constellationData);
+      console.log(serverData);
+      setDatabaseList(true);
     });
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      retrieveData();
-    }, 500);
-    setTimeout(() => {
-      setDatabaseList(true);
-    }, 1000);
+    retrieveData();
   }, []);
-
-  useLayoutEffect(() => {
-      setTimeout(() => {
-      {
-        databaseList &&
-        constellationDatabaseUpdatedInfo.map((item, key) => (
-            <LinearGradient
-              colors={['rgba(191, 0, 255, .2)', 'rgba(115, 0, 153, .2)', 'rgba(0, 64, 128, .2)']}
-              style={styles.gradient}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-            >
-              <Pressable
-                style={styles.pressableContainer}
-                key={key}
-                onPress={() => {
-                  setModalDisplay(true);
-                  // onSelectedConstellationDataIDHandler(item.id);
-                  onSelectedConstellationDataNameHandler(item.name);
-                  onSelectedConstellationDataInfoHandler(item.information);
-                  onSelectedConstellationDataUrlHandler(item.url);
-                }}
-              >
-                <Text style={styles.textFormat}>{item.name}</Text>
-              </Pressable>
-            </LinearGradient>
-          ));
-      }
-      console.log('useLayoutEffect fires!')
-      console.log('----- NEW LINE -----');
-      console.log(constellationDatabaseUpdatedInfo);
-    }, 2000);
-    }, []);
 
   function writeUserData() {
     set(ref(database, 'users/' + loggedInUser), {
-      constellationData,
+      constellationDatabaseUpdatedInfo,
     });
   }
 
@@ -172,8 +128,8 @@ export default function LoggedIn({ route }) {
           <ScrollView>
             <View style={styles.container}>
               {!databaseList && <Text style={styles.textFormat}>LOADING</Text>}
-              {/* {databaseList &&
-                constellationData.map((item, key) => (
+              {databaseList &&
+                serverData.map((item, key) => (
                   <LinearGradient
                     colors={[
                       'rgba(191, 0, 255, .2)',
@@ -189,7 +145,6 @@ export default function LoggedIn({ route }) {
                       key={key}
                       onPress={() => {
                         setModalDisplay(true);
-                        // onSelectedConstellationDataIDHandler(item.id);
                         onSelectedConstellationDataNameHandler(item.name);
                         onSelectedConstellationDataInfoHandler(item.information);
                         onSelectedConstellationDataUrlHandler(item.url);
@@ -198,7 +153,7 @@ export default function LoggedIn({ route }) {
                       <Text style={styles.textFormat}>{item.name}</Text>
                     </Pressable>
                   </LinearGradient>
-                ))} */}
+                ))}
             </View>
           </ScrollView>
         </SafeAreaView>
