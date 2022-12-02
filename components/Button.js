@@ -1,5 +1,6 @@
 /** @format */
 
+//* imports
 import { Text, Pressable, StyleSheet, View } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,6 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 export default function Button(props) {
   const { onPress, title } = props;
 
+  //* button component used throughout the app
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -26,6 +28,7 @@ export default function Button(props) {
   );
 }
 
+//* component styling
 const styles = StyleSheet.create({
   textDecoration: {
     color: 'white',

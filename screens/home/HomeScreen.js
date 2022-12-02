@@ -1,5 +1,6 @@
 /** @format */
 
+//* imports
 import React from 'react';
 import { ImageBackground, View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -15,6 +16,7 @@ import { Background } from '../../Background/Background';
 export default function HomeScreen() {
   const Stack = createNativeStackNavigator();
 
+//* navigation container for handling navigation stack
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -43,6 +45,7 @@ export default function HomeScreen() {
   );
 }
 
+//* default home screen on app load
 const HomeScreenStack = ({ navigation }) => {
   return (
     <ImageBackground
@@ -76,6 +79,7 @@ const HomeScreenStack = ({ navigation }) => {
   );
 };
 
+//* component styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,

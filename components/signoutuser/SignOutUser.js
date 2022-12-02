@@ -1,5 +1,6 @@
 /** @format */
 
+//* imports
 import { Text, Pressable, StyleSheet, View, Alert } from 'react-native';
 
 import { getAuth, signOut } from 'firebase/auth';
@@ -7,7 +8,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
 export default function SignOutUser() {
-    const navigation = useNavigation(); 
+  const navigation = useNavigation();
+  //* function that signs out the user, navigating them back to the home screen
   signOutFunction = () => {
     const signOutAuthentication = getAuth();
     signOut(signOutAuthentication).then(() => {
@@ -24,10 +26,11 @@ export default function SignOutUser() {
     });
   };
 
+  //* sign out button
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['rgba(37, 150, 190, 0.4)', 'rgba(46, 157, 209, 0.4)', 'rgba(46, 209, 98, 0.4)']}
+        colors={['rgba(37, 150, 190, 0.3)', 'rgba(46, 157, 209, 0.3)', 'rgba(46, 209, 98, 0.3)']}
         style={styles.gradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
@@ -43,6 +46,7 @@ export default function SignOutUser() {
   );
 }
 
+//* component styling
 const styles = StyleSheet.create({
   textDecoration: {
     color: '#2ED1B3',

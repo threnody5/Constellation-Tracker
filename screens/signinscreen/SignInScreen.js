@@ -1,5 +1,6 @@
 /** @format */
 
+//* imports
 import React, { useState } from 'react';
 import { ImageBackground, View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { authentication } from '../../FireBaseConfig';
@@ -8,9 +9,10 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import Button from '../../components/Button';
 import { Background } from '../../Background/Background';
 
+//* sign in function
 export default function SignInScreen({ navigation }) {
-  const [emailAddress, setEmailAddress] = useState('temp@temp.com');
-  const [password, setPassword] = useState('temppassword');
+  const [emailAddress, setEmailAddress] = useState();
+  const [password, setPassword] = useState();
 
   onEmailHandler = (value) => {
     setEmailAddress(value);
@@ -20,18 +22,19 @@ export default function SignInScreen({ navigation }) {
     setPassword(value);
   };
 
+  //* function fires when the user touches the sign in button
   const SignInUser = () => {
+    //* checks firebase authentication to verify if the account exists
     signInWithEmailAndPassword(authentication, emailAddress, password)
       .then((userCredential) => {
-        // signed in
         const user = userCredential.user;
-        // console.log(user);
+        //* alert informing the user that their login attempt was successful and routes the user to their signed in page
         Alert.alert('Message', 'Successfully signed in', [
           {
             text: 'Continue',
             onPress: () => {
               {
-                navigation.navigate( 'LoggedIn', { loggedInUser: user.uid });
+                navigation.navigate('LoggedIn', { loggedInUser: user.uid });
               }
             },
           },
@@ -45,6 +48,7 @@ export default function SignInScreen({ navigation }) {
       });
   };
 
+  //* sign in screen
   return (
     <ImageBackground
       style={{ flex: 1 }}
@@ -85,6 +89,7 @@ export default function SignInScreen({ navigation }) {
   );
 }
 
+//* component styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,5 +1,6 @@
 /** @format */
 
+//* imports
 import React, { useState } from 'react';
 import { ImageBackground, View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { authentication } from '../../FireBaseConfig';
@@ -10,8 +11,10 @@ import { ref, set } from 'firebase/database';
 import Button from '../../components/Button';
 import { Background } from '../../Background/Background';
 
+//* import json file which contains all constellation data
 import constellationData from '../../constellation.json';
 
+//* signup screen for users to create an account
 export default function SignUpScreen({ navigation }) {
   const [emailAddress, setEmailAddress] = useState();
   const [password, setPassword] = useState();
@@ -29,27 +32,32 @@ export default function SignUpScreen({ navigation }) {
     setReenteredPassword(value);
   };
 
+  //* function fired when the user presses the sign up button
   const RegisterUser = () => {
+    //* check if the passwords match
     if (password !== reenteredPassword) {
       Alert.alert('Passwords do not match');
       return;
     }
+    //* check if the password is longer than 6 characters
     if (password.length < 6) {
       Alert.alert('Password must be at least 6 characters');
       return;
     }
 
+    //* if checks pass, account is created with their email address and password
     createUserWithEmailAndPassword(authentication, emailAddress, password)
       .then((userCredential) => {
-        // user account created
         const userID = userCredential.user.uid;
 
+        //* writes the json data to their account on firebase under their uid
         function writeUserData() {
           set(ref(database, 'users/' + userID), {
             constellationData,
           });
         }
 
+        //* alerts the user of success, and routes them back to the main page
         Alert.alert('Message', 'Account successfully created', [
           {
             text: 'Go back to main page',
@@ -68,6 +76,7 @@ export default function SignUpScreen({ navigation }) {
       });
   };
 
+  //* sign up screen
   return (
     <ImageBackground
       style={{ flex: 1 }}
@@ -115,6 +124,7 @@ export default function SignUpScreen({ navigation }) {
   );
 }
 
+//* component styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
