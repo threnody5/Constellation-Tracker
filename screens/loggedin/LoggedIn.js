@@ -20,6 +20,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Background } from '../../Background/Background';
 import { database } from '../../FireBaseConfig';
 import { ref, set, onValue } from 'firebase/database';
+import SignOutUser from '../../components/signoutuser/SignOutUser';
 
 import { Audio } from 'expo-av';
 
@@ -150,6 +151,7 @@ export default function LoggedIn({ route }) {
       source={{ uri: Background }}
     >
       <View>
+        <SignOutUser />
         <Modal
           visible={modalDisplay}
           animationType='fade'
