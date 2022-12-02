@@ -10,6 +10,7 @@ import {
   Modal,
   ImageBackground,
   Image,
+  Alert,
 } from 'react-native';
 
 import Button from '../../components/Button';
@@ -17,7 +18,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Background } from '../../Background/Background';
-import SetLocation from '../../components/location/SetLocation';
 import { database } from '../../FireBaseConfig';
 import { ref, set, onValue } from 'firebase/database';
 
@@ -30,6 +30,7 @@ export default function LoggedIn({ route }) {
   let constellationDatabaseUpdatedInfo = [];
 
   const [modalDisplay, setModalDisplay] = useState(false);
+  const [selectedConstellationDataKey, setSelectedConstellationDataKey] = useState();
   const [selectedConstellationDataID, setSelectedConstellationDataID] = useState(null);
   const [selectedConstellationDataName, setSelectedConstellationDataName] = useState(null);
   const [selectedConstellationDataInfo, setSelectedConstellationDataInfo] = useState(null);
@@ -58,6 +59,10 @@ export default function LoggedIn({ route }) {
         }
       : undefined;
   }, [sound]);
+
+  onSelectedConstellationDataKeyHandler = (value) => {
+    setSelectedConstellationDataKey(value);
+  };
 
   onSelectedConstellationDataIDHandler = (value) => {
     setSelectedConstellationDataID(value);
@@ -92,13 +97,51 @@ export default function LoggedIn({ route }) {
   }, []);
 
   function writeUserData() {
-    set(ref(database, 'users/' + loggedInUser + serverData + selectedConstellationDataID), {
-      
-    });
+    if (haveSeen === true) {
+      set(
+        ref(
+          database,
+          'users/' + loggedInUser + '/constellationData/' + selectedConstellationDataKey
+        ),
+        {
+          haveSeen: true,
+          id: selectedConstellationDataID,
+          information: selectedConstellationDataInfo,
+          name: selectedConstellationDataName,
+          url: selectedConstellationDataUrl,
+        }
+      );
+    } else {
+      Alert.alert('Update', 'No changes have been made', [
+        {
+          text: 'Okay',
+        },
+      ]);
+    }
     retrieveData();
   }
 
-  console.log(selectedConstellationDataUrl);
+  // ColorRenderElement = () => {
+  //   if (haveSeen === true) {
+  //     return (
+  //       <LinearGradient
+  //         colors={['rgba(191, 0, 255, .2)', 'rgba(115, 0, 153, .2)', 'rgba(0, 64, 128, .2)']}
+  //         style={styles.gradient}
+  //         start={{ x: 0, y: 0 }}
+  //         end={{ x: 1, y: 1 }}
+  //       ></LinearGradient>
+  //     );
+  //   } else {
+  //     return (
+  //       <LinearGradient
+  //         colors={['rgba(191, 0, 255, 1)', 'rgba(115, 0, 153, 1)', 'rgba(0, 64, 128, 1)']}
+  //         style={styles.gradient}
+  //         start={{ x: 0, y: 0 }}
+  //         end={{ x: 1, y: 1 }}
+  //       ></LinearGradient>
+  //     );
+  //   }
+  // };
 
   return (
     <ImageBackground
@@ -142,10 +185,9 @@ export default function LoggedIn({ route }) {
                   />
                   <Text style={styles.checkBoxText}>I have Seen this in the sky!</Text>
                 </View>
-                <SetLocation />
                 <Button
                   title='Update'
-                  onPress={playSound}
+                  onPress={writeUserData}
                 />
               </View>
             </ScrollView>
@@ -167,11 +209,14 @@ export default function LoggedIn({ route }) {
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
                   >
+                    {/* <ColorRenderElement> */}
                     <Pressable
                       style={styles.pressableContainer}
                       key={key}
                       onPress={() => {
                         setModalDisplay(true);
+                        setHaveSeen(item.haveSeen);
+                        onSelectedConstellationDataKeyHandler(key);
                         onSelectedConstellationDataNameHandler(item.id);
                         onSelectedConstellationDataNameHandler(item.name);
                         onSelectedConstellationDataInfoHandler(item.information);
@@ -180,6 +225,7 @@ export default function LoggedIn({ route }) {
                     >
                       <Text style={styles.textFormat}>{item.name}</Text>
                     </Pressable>
+                    {/* </ColorRenderElement> */}
                   </LinearGradient>
                 ))}
             </View>
