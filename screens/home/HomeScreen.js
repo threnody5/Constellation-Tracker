@@ -13,8 +13,6 @@ import LoggedIn from '../loggedin/LoggedIn';
 import { Background } from '../../Background/Background';
 
 export default function HomeScreen() {
-  // Initialize Firebase authentication and get a reference to the service
-
   const Stack = createNativeStackNavigator();
 
   return (
@@ -100,6 +98,5 @@ const styles = StyleSheet.create({
   fontStyle: {
     color: 'white',
     fontSize: 22,
-    // rgb(191, 0, 255)
   },
 });
