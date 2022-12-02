@@ -27,7 +27,8 @@
     "react-navigation-stack": "^2.10.4",
     "vector-icons": "^0.1.0",
     "expo-checkbox": "~2.2.2",
-    "expo-location": "~15.0.1"
+    "expo-location": "~15.0.1",
+    "expo-av": "~13.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

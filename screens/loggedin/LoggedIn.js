@@ -21,6 +21,8 @@ import SetLocation from '../../components/location/SetLocation';
 import { database } from '../../FireBaseConfig';
 import { ref, set, onValue } from 'firebase/database';
 
+import { Audio } from 'expo-av';
+
 import Checkbox from 'expo-checkbox';
 
 export default function LoggedIn({ route }) {
@@ -28,12 +30,34 @@ export default function LoggedIn({ route }) {
   let constellationDatabaseUpdatedInfo = [];
 
   const [modalDisplay, setModalDisplay] = useState(false);
+  const [selectedConstellationDataID, setSelectedConstellationDataID] = useState(null);
   const [selectedConstellationDataName, setSelectedConstellationDataName] = useState(null);
   const [selectedConstellationDataInfo, setSelectedConstellationDataInfo] = useState(null);
   const [selectedConstellationDataUrl, setSelectedConstellationDataUrl] = useState(null);
   const [databaseList, setDatabaseList] = useState(null);
   const [serverData, setServerData] = useState([]);
   const [haveSeen, setHaveSeen] = useState(false);
+  const [sound, setSound] = useState();
+
+  async function playSound() {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync(
+      require('../../components/audio/industrial-pulse-drone-27456.mp3')
+    );
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.playAsync();
+  }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
 
   onSelectedConstellationDataIDHandler = (value) => {
     setSelectedConstellationDataID(value);
@@ -58,20 +82,23 @@ export default function LoggedIn({ route }) {
     onValue(constellationDatabaseInfo, (snapshot) => {
       constellationDatabaseUpdatedInfo = snapshot.val();
       setServerData(constellationDatabaseUpdatedInfo.constellationData);
-      console.log(serverData);
       setDatabaseList(true);
     });
   };
 
   useEffect(() => {
     retrieveData();
+    playSound();
   }, []);
 
   function writeUserData() {
-    set(ref(database, 'users/' + loggedInUser), {
-      constellationDatabaseUpdatedInfo,
+    set(ref(database, 'users/' + loggedInUser + serverData + selectedConstellationDataID), {
+      
     });
+    retrieveData();
   }
+
+  console.log(selectedConstellationDataUrl);
 
   return (
     <ImageBackground
@@ -118,7 +145,7 @@ export default function LoggedIn({ route }) {
                 <SetLocation />
                 <Button
                   title='Update'
-                  onPress={writeUserData}
+                  onPress={playSound}
                 />
               </View>
             </ScrollView>
@@ -145,6 +172,7 @@ export default function LoggedIn({ route }) {
                       key={key}
                       onPress={() => {
                         setModalDisplay(true);
+                        onSelectedConstellationDataNameHandler(item.id);
                         onSelectedConstellationDataNameHandler(item.name);
                         onSelectedConstellationDataInfoHandler(item.information);
                         onSelectedConstellationDataUrlHandler(item.url);
