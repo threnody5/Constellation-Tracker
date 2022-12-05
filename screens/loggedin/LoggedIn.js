@@ -13,11 +13,13 @@ import {
   Image,
   Alert,
 } from 'react-native';
+
 import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
 import { database } from '../../FireBaseConfig';
 import { ref, set, onValue } from 'firebase/database';
+import * as MailComposer from 'expo-mail-composer';
 import * as SMS from 'expo-sms';
 
 import Button from '../../components/Button';
@@ -155,11 +157,12 @@ export default function LoggedIn({ route }) {
 
   const SendSMS = async () => {
     const isAvailable = await SMS.isAvailableAsync();
-    const message = `I've seen this!
+    const message = `I've seen this! \n
+                    This is the constellation name! \n
                     ${selectedConstellationDataName} \n
-                    Here's some information about it!
+                    Here's some information about it! \n
                     ${selectedConstellationDataInfo} \n
-                    Here's a link to an image of it!
+                    Here's a link to an image of it! \n
                     ${selectedConstellationDataUrl}`;
 
     if (!isAvailable) {
@@ -172,6 +175,33 @@ export default function LoggedIn({ route }) {
       return;
     }
     Alert.alert('Something went wrong, please try again.');
+  };
+
+  const SendEmail = async () => {
+    const isAvailable = await MailComposer.isAvailableAsync();
+
+    const message = `I've seen this! \n
+    This is the constellation name! \n
+    ${selectedConstellationDataName} \n
+    Here's some information about it! \n
+    ${selectedConstellationDataInfo} \n
+    Here's a link to an image of it! \n
+    ${selectedConstellationDataUrl}`;
+
+    var emailOptions = {
+      recipients: ['w_watson156803@fanshaweonline.ca'],
+      subject: "I've seen this constellation!",
+      body: message,
+    };
+    if (!isAvailable) {
+      Alert.alert('Email is not available');
+      return;
+    }
+    Alert.alert('Alert', 'Email sent successfully.');
+
+    MailComposer.composeAsync(emailOptions).then((result) => {
+      console.log(result);
+    });
   };
 
   //* renders loading screen until data is loaded from the database
@@ -227,6 +257,10 @@ export default function LoggedIn({ route }) {
                 <Button
                   title='Share Via SMS'
                   onPress={SendSMS}
+                />
+                <Button
+                  title='Share Via Email'
+                  onPress={SendEmail}
                 />
               </View>
             </ScrollView>
