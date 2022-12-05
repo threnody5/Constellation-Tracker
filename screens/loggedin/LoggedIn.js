@@ -13,14 +13,15 @@ import {
   Image,
   Alert,
 } from 'react-native';
-
-import Button from '../../components/Button';
 import { ScrollView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Background } from '../../Background/Background';
 import { database } from '../../FireBaseConfig';
 import { ref, set, onValue } from 'firebase/database';
+import * as SMS from 'expo-sms';
+
+import Button from '../../components/Button';
+import { Background } from '../../Background/Background';
 import SignOutUser from '../../components/signoutuser/SignOutUser';
 
 import { Audio } from 'expo-av';
@@ -152,6 +153,27 @@ export default function LoggedIn({ route }) {
     }
   }
 
+  const SendSMS = async () => {
+    const isAvailable = await SMS.isAvailableAsync();
+    const message = `I've seen this!
+                    ${selectedConstellationDataName} \n
+                    Here's some information about it!
+                    ${selectedConstellationDataInfo} \n
+                    Here's a link to an image of it!
+                    ${selectedConstellationDataUrl}`;
+
+    if (!isAvailable) {
+      Alert.alert('SMS is not available');
+      return;
+    }
+    const { result } = await SMS.sendSMSAsync(['1231231234', '2342342345'], message);
+    if (result) {
+      Alert.alert('Alert', 'SMS sent successfully.');
+      return;
+    }
+    Alert.alert('Something went wrong, please try again.');
+  };
+
   //* renders loading screen until data is loaded from the database
   //* if the value haveSeen from the database is false, the constellation object box and name are rendered with purple colors, if haveSeen is true, constellation object boxes are rendered with blue colors
   //* these colors and values are updated on each login, and each time the user updates a constellation object
@@ -199,8 +221,12 @@ export default function LoggedIn({ route }) {
                   <Text style={styles.checkBoxText}>I have Seen this in the sky!</Text>
                 </View>
                 <Button
-                  title='Update'
+                  title='Update Database'
                   onPress={writeUserData}
+                />
+                <Button
+                  title='Share Via SMS'
+                  onPress={SendSMS}
                 />
               </View>
             </ScrollView>
